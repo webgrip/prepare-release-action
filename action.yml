@@ -1,0 +1,6 @@
+name: 'action-action'
+description: 'action-action description'
+author: 'organisation'
+runs:
+  using: 'node24'
+  main: 'dist/index.js'

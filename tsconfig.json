@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "module": "CommonJS",
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+
+    "strict": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    "allowJs": false,
+    "checkJs": false,
+    "sourceMap": false,
+    "lib": ["ES2023"],
+    "noEmit": false,
+    "preserveWatchOutput": true,
+
+    // The typical typeRoots and types
+    "typeRoots": ["./node_modules/@types"],
+    "types": ["node"]
+  },
+  // Only compile the application source
+  "include": ["src/**/*.ts"],
+  // Exclude build output, node_modules, and tests
+  "exclude": ["dist", "node_modules", "tests", "docs"]
+}

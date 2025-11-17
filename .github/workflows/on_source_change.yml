@@ -1,0 +1,31 @@
+name: "[Workflow] On Source Change"
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  statuses: write
+
+concurrency:
+  group: push-${{ github.branch }}
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - '.github/workflows/on_source_change.yml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'action.yml'
+
+jobs:
+  linter:
+    uses: webgrip/workflows/.github/workflows/gha-javascript-lint.yml@main
+
+  semantic-release:
+    uses: webgrip/workflows/.github/workflows/semantic-release.yml@main
+    needs: [ linter ]
+    if: >
+      always()
+      && needs.linter.result == 'success'
+      && github.ref == 'refs/heads/main'

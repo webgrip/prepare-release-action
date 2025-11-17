@@ -1,0 +1,48 @@
+services:
+  action-action.lint:
+    container_name: action-action.lint
+    build:
+      context: .
+      dockerfile: ops/action/Dockerfile
+      target: lint
+    environment:
+      - NODE_ENV=lint
+    tty: true
+
+  action-action.test:
+    container_name: action-action.test
+    build:
+      context: .
+      dockerfile: ops/action/Dockerfile
+      target: test
+    depends_on:
+      action-action.lint:
+        condition: service_completed_successfully
+    environment:
+      - NODE_ENV=test
+    tty: true
+
+  action-action.app:
+    container_name: action-action.app
+    build:
+      context: .
+      dockerfile: ops/action/Dockerfile
+      target: runtime
+    depends_on:
+      action-action.test:
+        condition: service_completed_successfully
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+
+  action-action.dev:
+    container_name: action-action.dev
+    image: node:24-alpine
+    working_dir: /workspace
+    volumes:
+      - ./:/workspace:cached
+      - /workspace/node_modules
+    command: sh -c "npm install && npm run start"
+    ports:
+      - "3000:3000"

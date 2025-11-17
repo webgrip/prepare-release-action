@@ -1,0 +1,7 @@
+.idea/
+.vscode/
+node_modules/
+coverage/
+.jest/
+dist/
+*.private.env.json

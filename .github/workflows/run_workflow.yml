@@ -1,0 +1,8 @@
+name: "[Workflow] Run action-action"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-action:
+    uses: ./.github/workflows/run_workflow_call.yml
