@@ -1,9 +1,9 @@
 {
-  "name": "action-action",
+  "name": "prepare-release-action",
   "version": "0.1.0",
-  "description": "action-action description",
+  "description": "prepare-release-action description",
   "main": "./dist/index.js",
-  "publisher": "organisation",
+  "publisher": "webgrip",
   "categories": [
     "Other"
   ],

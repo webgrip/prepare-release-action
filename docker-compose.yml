@@ -1,6 +1,6 @@
 services:
-  action-action.lint:
-    container_name: action-action.lint
+  prepare-release-action.lint:
+    container_name: prepare-release-action.lint
     build:
       context: .
       dockerfile: ops/action/Dockerfile
@@ -9,35 +9,35 @@ services:
       - NODE_ENV=lint
     tty: true
 
-  action-action.test:
-    container_name: action-action.test
+  prepare-release-action.test:
+    container_name: prepare-release-action.test
     build:
       context: .
       dockerfile: ops/action/Dockerfile
       target: test
     depends_on:
-      action-action.lint:
+      prepare-release-action.lint:
         condition: service_completed_successfully
     environment:
       - NODE_ENV=test
     tty: true
 
-  action-action.app:
-    container_name: action-action.app
+  prepare-release-action.app:
+    container_name: prepare-release-action.app
     build:
       context: .
       dockerfile: ops/action/Dockerfile
       target: runtime
     depends_on:
-      action-action.test:
+      prepare-release-action.test:
         condition: service_completed_successfully
     environment:
       - NODE_ENV=production
     ports:
       - "3000:3000"
 
-  action-action.dev:
-    container_name: action-action.dev
+  prepare-release-action.dev:
+    container_name: prepare-release-action.dev
     image: node:24-alpine
     working_dir: /workspace
     volumes:

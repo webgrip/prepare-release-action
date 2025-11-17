@@ -1,6 +1,6 @@
-name: 'action-action'
-description: 'action-action description'
-author: 'organisation'
+name: 'prepare-release-action'
+description: 'prepare-release-action description'
+author: 'webgrip'
 runs:
   using: 'node24'
   main: 'dist/index.js'

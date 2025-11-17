@@ -1,4 +1,4 @@
-site_name: "action-action TechDocs"
+site_name: "prepare-release-action TechDocs"
 site_description: ""
 
 theme:
@@ -81,9 +81,9 @@ extra:
       github: Github
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/organisation
+      link: https://github.com/webgrip
   generator: false
 
 copyright: >
-  organisation © 2013 - 2025 Building Better Developers  - 
+  webgrip © 2013 - 2025 Building Better Developers  - 
   <a href="#__consent">Change cookie settings</a>

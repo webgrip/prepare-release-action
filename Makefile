@@ -1,6 +1,6 @@
 .PHONY: default help start stop logs enter build-base build build-runtime test lint fix clean badge start-app dev run-npm docker-run images
 
-IMAGE ?= action-action
+IMAGE ?= prepare-release-action
 DOCKERFILE ?= ops/action/Dockerfile
 WORKDIR ?= /workspace
 DOCKER ?= docker
@@ -17,7 +17,7 @@ start:
 	@echo "Bringing up compose stack (build)..."
 	@$(COMPOSE) up --build -d || true
 	@echo "Running lint via compose..."
-	@$(COMPOSE) run --rm action-action.lint || { echo "Lint failed, running make fix..."; $(MAKE) fix || { echo "make fix failed"; exit 1; }; echo "Rebuilding images and starting stack again..."; $(COMPOSE) up --build -d || { echo "Compose up failed after fixes"; exit 1; }; }
+	@$(COMPOSE) run --rm prepare-release-action.lint || { echo "Lint failed, running make fix..."; $(MAKE) fix || { echo "make fix failed"; exit 1; }; echo "Rebuilding images and starting stack again..."; $(COMPOSE) up --build -d || { echo "Compose up failed after fixes"; exit 1; }; }
 	@echo "Compose is up."
 
 stop:
@@ -27,7 +27,7 @@ logs:
 	@$(COMPOSE) logs -f
 
 enter:
-	@$(COMPOSE) exec action-action.test /bin/sh || $(COMPOSE) exec action-action.lint /bin/sh
+	@$(COMPOSE) exec prepare-release-action.test /bin/sh || $(COMPOSE) exec prepare-release-action.lint /bin/sh
 
 install:
 	@$(DOCKER) image inspect $(IMAGE):base >/dev/null 2>&1 || $(MAKE) build-base
@@ -46,10 +46,10 @@ build-runtime:
 	@$(DOCKER) build --target runtime -f $(DOCKERFILE) -t $(IMAGE):runtime .
 
 test:
-	@$(COMPOSE) run --rm action-action.test
+	@$(COMPOSE) run --rm prepare-release-action.test
 
 lint:
-	@$(COMPOSE) run --rm action-action.lint
+	@$(COMPOSE) run --rm prepare-release-action.lint
 
 fix: build-base
 	@echo "Running eslint --fix inside '$(IMAGE):base'..."
