@@ -410,20 +410,22 @@ export class GitHubService {
         const results: PrInfo[] = [];
         let after: string | null = null;
 
+        interface SearchResponse {
+            search: {
+                pageInfo: { hasNextPage: boolean; endCursor: string | null };
+                nodes: Array<{
+                    id: string;
+                    number: number;
+                    title: string;
+                    body: string | null;
+                    mergedAt: string;
+                    labels: { nodes: Array<{ name: string | null }> };
+                }>;
+            };
+        }
+
         while (true) {
-            const data = await this.graph<{
-                search: {
-                    pageInfo: { hasNextPage: boolean; endCursor: string | null };
-                    nodes: Array<{
-                        id: string;
-                        number: number;
-                        title: string;
-                        body: string | null;
-                        mergedAt: string;
-                        labels: { nodes: Array<{ name: string | null }> };
-                    }>;
-                };
-            }>(query, { q: searchQuery, after });
+            const data: SearchResponse = await this.graph<SearchResponse>(query, { q: searchQuery, after });
 
             for (const node of data.search.nodes) {
                 results.push({
@@ -432,7 +434,7 @@ export class GitHubService {
                     title: node.title,
                     body: node.body ?? '',
                     labels: node.labels.nodes
-                        .map((l) => l.name || '')
+                        .map((l: { name: string | null }) => l.name || '')
                         .filter(Boolean),
                     mergedAt: node.mergedAt,
                 });
