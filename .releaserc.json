@@ -3,13 +3,45 @@
   "tagFormat": "v${version}",
   "plugins": [
     "@semantic-release/commit-analyzer",
-    "@semantic-release/release-notes-generator",
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            { "type": "feat", "section": "Added" },
+            { "type": "fix", "section": "Fixed" },
+            { "type": "perf", "section": "Performance" },
+            { "type": "refactor", "section": "Changed" },
+            { "type": "chore", "section": "Internal", "hidden": true },
+            { "type": "docs", "section": "Docs", "hidden": true },
+            { "type": "test", "section": "Tests", "hidden": true }
+          ]
+        },
+        "parserOpts": {
+          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES", "BREAKING"]
+        },
+        "writerOpts": {
+          "groupBy": "scope",
+          "commitGroupsSort": "title",
+          "commitsSort": ["type", "subject"]
+        }
+      }
+    ],
     [
       "@semantic-release/changelog",
       {
         "changelogFile": "CHANGELOG.md"
       }
     ],
+    [
+      "@semantic-release/npm",
+      {
+        "npmPublish": false
+      }
+    ],
+    "semantic-release-github-actions-tags",
+    "@semantic-release/github",
     [
       "@semantic-release/git",
       {
@@ -27,14 +59,6 @@
       {
         "successCmd": "echo \"version=${nextRelease.version}\" >> $GITHUB_OUTPUT"
       }
-    ],
-    [
-      "@semantic-release/npm",
-      {
-        "npmPublish": false
-      }
-    ],
-    "semantic-release-github-actions-tags",
-    "@semantic-release/github"
+    ]
   ]
 }
