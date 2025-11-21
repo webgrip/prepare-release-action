@@ -13,10 +13,11 @@ on:
   push:
     paths:
       - 'src/**'
-      - '.github/workflows/on_source_change.yml'
       - 'package.json'
       - 'package-lock.json'
       - 'action.yml'
+      - '.releaserc.json'
+      - '.github/workflows/on_source_change.yml'
 
 jobs:
   linter:
