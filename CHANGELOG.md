@@ -1,3 +1,9 @@
+## [1.0.2](https://github.com/webgrip/prepare-release-action/compare/v1.0.1...v1.0.2) (2025-11-21)
+
+* added releaserc to the on_source_change files ([e0e8000](https://github.com/webgrip/prepare-release-action/commit/e0e8000ba34872b83e81753206afc172f4b9853d))
+* moved some stuff around, hopefully it commits and pushes package.lock now ([e019d13](https://github.com/webgrip/prepare-release-action/commit/e019d1320aa11a8aa9fc644428f62043619c10ab))
+* run again ([fe46b56](https://github.com/webgrip/prepare-release-action/commit/fe46b56cfde2056fde25df337aa2441291780a43))
+
 ## [1.0.1](https://github.com/webgrip/prepare-release-action/compare/v1.0.0...v1.0.1) (2025-11-21)
 
 

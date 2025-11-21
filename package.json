@@ -1,6 +1,6 @@
 {
   "name": "prepare-release-action",
-  "version": "0.1.0",
+  "version": "1.0.2",
   "description": "prepare-release-action description",
   "main": "./dist/index.js",
   "publisher": "webgrip",
