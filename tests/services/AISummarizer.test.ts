@@ -5,8 +5,9 @@ jest.mock('@actions/core', () => ({
 
 import { AISummarizer } from '../../src/services/AISummarizer';
 
+import * as core from '@actions/core';
+
 describe('AISummarizer.generateSummary', () => {
-    const core = require('@actions/core');
 
     it('returns null if no api key provided', async () => {
         const ai = new AISummarizer();

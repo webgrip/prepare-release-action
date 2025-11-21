@@ -1,6 +1,14 @@
-/* global jest, describe, it, expect */
+/* eslint-disable @typescript-eslint/no-explicit-any, no-unused-vars */
+
+interface JestGlobal {
+    mock: (module: string, factory: () => any) => void;
+    fn: () => any;
+    resetModules: () => void;
+}
+
+declare const jest: JestGlobal;
 declare function describe(name: string, fn: () => void): void;
-declare function it(name: string, fn: () => any): void;
+declare function it(name: string, fn: () => void): void;
 declare function expect(actual: any): any;
 declare function require(name: string): any;
 
@@ -31,7 +39,7 @@ describe('GitHubService.ensureActiveReleasePr', () => {
         jest.resetModules();
         jest.mock('@actions/core', () => ({ info: jest.fn() }));
         // Responses keyed by substring detection in query
-        const responses: Record<string, any> = {
+        const responses: Record<string, unknown> = {
             'ActiveReleasePr': { search: { nodes: [] } },
             'RepoId': { repository: { id: 'REPO_ID' } },
             'LatestTag': { repository: { refs: { nodes: [{ name: 'v1.0.0', target: { committedDate: '2024-01-01T00:00:00Z' } }] } } },

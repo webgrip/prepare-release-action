@@ -24,10 +24,6 @@ jest.mock('@actions/exec', () => ({
 }));
 
 // Mock dependent services to isolate ApplicationService orchestration
-const ensureActiveReleasePrMock = jest.fn().mockResolvedValue({ branch: 'release/1.0.1', version: '1.0.1', prNumber: 7 });
-const collectReleasePullRequestsMock = jest.fn().mockResolvedValue([
-    { id: 'x', number: 1, title: 'Feat A', body: 'Body', labels: [], mergedAt: '2024-01-01T00:00:00Z' },
-]);
 // Use dependency injection instead of module mocking for GitHubService
 
 jest.mock('../../src/services/AISummarizer', () => ({

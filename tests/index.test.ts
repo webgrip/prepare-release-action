@@ -1,8 +1,19 @@
-/* global jest, describe, it, expect */
-declare const jest: any;
+/* eslint-disable @typescript-eslint/no-explicit-any, no-unused-vars */
+
+interface JestGlobal {
+    mock: (module: string, factory: () => any) => void;
+    fn: () => any;
+    spyOn: (object: any, method: string) => any;
+    resetModules: () => void;
+    clearAllMocks: () => void;
+    isolateModulesAsync: (fn: () => Promise<void>) => Promise<void>;
+}
+
+declare const jest: JestGlobal;
 declare function describe(name: string, fn: () => void): void;
-declare function it(name: string, fn: () => any): void;
+declare function it(name: string, fn: () => void): void;
 declare function expect(actual: any): any;
+declare function beforeEach(fn: () => void): void;
 
 jest.mock('@actions/core', () => ({
     info: jest.fn(),

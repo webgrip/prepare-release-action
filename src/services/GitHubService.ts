@@ -7,9 +7,11 @@ import {
     ReleasePrInfo,
 } from '../types';
 
+/* eslint-disable no-unused-vars */
 interface GraphQLClient {
-    <T = any>(query: string, variables?: Record<string, unknown>): Promise<T>;
+    <T = unknown>(_query: string, _variables?: Record<string, unknown>): Promise<T>;
 }
+/* eslint-enable no-unused-vars */
 
 export class GitHubService {
     private graph: GraphQLClient;
@@ -38,7 +40,8 @@ export class GitHubService {
         return this.createNewReleasePr();
     }
 
-    public async collectReleasePullRequests(version: string): Promise<PrInfo[]> {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
+    public async collectReleasePullRequests(_version: string): Promise<PrInfo[]> {
         // Use last tag on baseBranch as "since"
         const lastTag = await this.getLatestTag();
         let since: string | null = null;
@@ -174,7 +177,7 @@ export class GitHubService {
         core.info(`Last tag: ${lastTagName}`);
 
         const rawVersion = lastTagName.replace(/^v/, '');
-        const [maj, min, pat] = rawVersion.split('.').map(n => parseInt(n || '0', 10));
+        const [maj, min, pat] = rawVersion.split('.').map((n) => parseInt(n || '0', 10));
         const nextVersion = `${maj}.${min}.${(pat || 0) + 1}`;
         const branchName = `release/${nextVersion}`;
 
@@ -227,8 +230,8 @@ export class GitHubService {
                 },
             });
             core.info(`Created branch ${branchName} at ${oid}`);
-        } catch (error: any) {
-            const message = error?.message ?? '';
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : String(error);
             if (message.includes('Reference already exists')) {
                 core.info(`Branch ${branchName} already exists, continuing`);
             } else {
@@ -429,7 +432,7 @@ export class GitHubService {
                     title: node.title,
                     body: node.body ?? '',
                     labels: node.labels.nodes
-                        .map(l => l.name || '')
+                        .map((l) => l.name || '')
                         .filter(Boolean),
                     mergedAt: node.mergedAt,
                 });

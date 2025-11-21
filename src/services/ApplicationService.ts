@@ -8,7 +8,6 @@ import { GitHubService } from './GitHubService';
 import {
     PrepareReleaseResult,
     ReleaseContext,
-    ReleasePrInfo,
 } from '../types';
 
 export class ApplicationService {

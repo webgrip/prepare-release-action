@@ -50,7 +50,7 @@ export class AISummarizer {
                     messages: [{ role: 'user', content: prompt }],
                     temperature: 0.2,
                 }),
-            } as any);
+            });
 
             if (!response.ok) {
                 const text = await response.text();
@@ -58,7 +58,15 @@ export class AISummarizer {
                 return null;
             }
 
-            const json = (await response.json()) as any;
+            interface OpenAIResponse {
+                choices?: Array<{
+                    message?: {
+                        content?: string;
+                    };
+                }>;
+            }
+
+            const json = (await response.json()) as OpenAIResponse;
             const content = json?.choices?.[0]?.message?.content;
             if (typeof content !== 'string') {
                 core.warning('Unexpected OpenAI response structure');
