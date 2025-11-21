@@ -28,6 +28,10 @@ extra_javascript:
 
 nav:
   - Home: index.md
+  - Usage: usage.md
+  - Architecture: architecture.md
+  - Development: development.md
+  - ADRs: adr-index.md
 
 # https://www.mkdocs.org/user-guide/configuration
 plugins:
